@@ -1,0 +1,53 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2-Jun-2016, 2:48:31 PM
+    Author     : thuyha
+*/
+
+
+body{	
+    width: 650px;	
+    margin: 0 auto;         
+    border-radius: 8px;  /*round at the conners*/	
+}
+
+
+form{
+    padding:1em;
+    border-left: 2px solid rgb(122,41,70);
+    border-right: 2px solid rgb(122,41,70);
+    color: green;
+    font-weight: bold; 
+}
+
+
+label {
+    float: left;
+    width: 7em;
+    text-align: right;}
+	
+input, select{
+    width: 20em;
+    margin-left: 1em;
+    margin-bottom: .5em;
+	}
+
+
+	
+#buttons input{
+    width: 6em;
+    margin-top:0.8em;}
+	
+#day{
+	width:2em;
+}
+#month,#student_id,#gender{
+	width:7em;
+}
+#year{
+	width:4em;
+}

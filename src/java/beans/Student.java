@@ -50,7 +50,7 @@ public class Student implements Serializable {
     @Column(name="email", length=40)
     private String email;
     
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
    // @Fetch(FetchMode.SELECT)
     private Set<Results> results;
 

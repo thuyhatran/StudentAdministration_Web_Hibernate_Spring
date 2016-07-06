@@ -34,7 +34,7 @@ public class Course implements Serializable {
 
     //@OneToMany(mappedBy = "course")
    // @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Results> results = new HashSet<Results>();
     
     public Course(int course_id, String course_name) {

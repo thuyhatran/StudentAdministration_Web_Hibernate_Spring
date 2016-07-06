@@ -3,6 +3,7 @@ import Service.resultService;
 import Service.studentService;
 import beans.Results;
 import beans.Student;
+import beans.StudentGradeTest;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -45,9 +46,9 @@ public class NewMain {
         //stService.insert(meeting2);
         
         
-        resultService stResult = new resultService();
-        
-        Results rs1 = new Results(1,1,70,90);
+//        resultService stResult = new resultService();
+//        
+//        Results rs1 = new Results(1,1,70,90);
         
         //session.save(rs1);
         
@@ -59,17 +60,31 @@ public class NewMain {
 //resultService rslSer = new resultService();
 //            rslSer.deleteStudent(5);
          
-    Student student = (Student) session.get(Student.class, 2);
+//    Student student = (Student) session.get(Student.class, 2);
+//        
+//        System.out.println("Student name: " + student.getFirst_name());
+//        
+//        Set<Results> results = student.getResults();
+//                            
+//        for (Results rls:results){
+//            System.out.println("mark1 : " + rls.getMark1());
+//            System.out.println("mark2 : " + rls.getMark2());
+//        }
         
-        System.out.println("Student name: " + student.getFirst_name());
         
-        Set<Results> results = student.getResults();
-        
-                    
-        for (Results rls:results){
-            System.out.println("mark1 : " + rls.getMark1());
-            System.out.println("mark2 : " + rls.getMark2());
+        String hql = "from Student as st join st.results as rls  " ;
+        Query query = session.createQuery(hql);  
+       List<Object[]> studentGrade = query.list();
+       
+       System.out.println("studentGrade size " + studentGrade.size()); 
+       
+        for (Object ob:studentGrade ){
+            
+             System.out.println(ob.toString());
+
         }
+        
+        
         
        
         

@@ -8,6 +8,7 @@ package beans;
 /**
  *
  * @author thuyha
+ * this class presents the grade of students
  */
 public class StudentsGrade {
      private int student_id;
@@ -19,15 +20,37 @@ public class StudentsGrade {
     private int mark2;
     private char grade;
 
-    public StudentsGrade(int student_id, String first_name, String last_name, String course, int mark1, char grade) {
+
+
+    public StudentsGrade() {
+    }
+
+    public StudentsGrade(int student_id, String first_name, String last_name, String gender, String course, int mark1, int mark2, char grade) {
         this.student_id = student_id;
         this.first_name = first_name;
         this.last_name = last_name;
+        this.gender = gender;
         this.course = course;
         this.mark1 = mark1;
+        this.mark2 = mark2;
         this.grade = grade;
     }
+    
+    
+    
+    public StudentsGrade(int student_id, String first_name, String last_name, String gender, String course, int mark1, int mark2) {
+        this.student_id = student_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.gender = gender;
+        this.course = course;
+        this.mark1 = mark1;
+        this.mark2 = mark2;
+    }
 
+    
+
+    
     public String getCourse() {
         return course;
     }
@@ -38,8 +61,6 @@ public class StudentsGrade {
 
     
 
-    public StudentsGrade() {
-    }
 
     public int getStudent_id() {
         return student_id;

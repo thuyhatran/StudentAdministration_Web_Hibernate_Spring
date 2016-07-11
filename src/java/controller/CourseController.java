@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Administrator
+ * @author Thuy Ha
  */
 @WebServlet(name = "CourseController", urlPatterns = {"/CourseController"})
 public class CourseController extends HttpServlet {
@@ -86,13 +86,6 @@ public class CourseController extends HttpServlet {
                 getServletContext().getRequestDispatcher(url).forward(request, response);
                 break;
                 
-                  
-                
-//            case "SaveToFile":
-//                CourseControllerMethods.importStudentCalled(request, response);
-//                url ="/JSPs/main.jsp";
-//                getServletContext().getRequestDispatcher(url).forward(request, response); 
-//                break;
                 
             default:
                 url ="/JSPs/main.jsp";

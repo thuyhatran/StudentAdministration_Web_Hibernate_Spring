@@ -5,9 +5,12 @@
  */
 package daoimplement;
 
-import JDBC_Connection.JDBC_StudentConnect;
+
+import Service.courseService;
+import Service.studentService;
 import beans.Course;
 import beans.Results;
+import beans.ResultsPK;
 import beans.Student;
 import daointerface.daointerface;
 import daointerface.resultsInterface;
@@ -85,16 +88,15 @@ public class resultDao implements resultsInterface<Results> {
         this.currentTransaction = currentTransaction;
     }
     
-
-    
-
+    //insert a new record
     @Override
     public void insert(Results entity) {
-       
-        getCurrentSession().saveOrUpdate(entity);
-       
+             
+        getCurrentSession().saveOrUpdate(entity);  
+              
     }
 
+    // update a record
     @Override
     public void update(Results entity) {
         
@@ -102,13 +104,12 @@ public class resultDao implements resultsInterface<Results> {
         
     }
 
+    // Select a record in result that have student_id = st_id and course_id = crs_id
     @Override
     public Results selectById(int st_id, int crs_id) {
-       
-        //Results st = (Results) getCurrentSession().get(Results.class, st_id, crs_id);
-        
+ 
         String hql = "FROM Results "
-                + "where student_id = " + st_id + " and course_id = " + crs_id ;
+                + "where pk.student.student_id = " + st_id + " and pk.course.course_id = " + crs_id ;
         Query query = getCurrentSession().createQuery(hql);
         List<Results> results = query.list();
         
@@ -121,325 +122,171 @@ public class resultDao implements resultsInterface<Results> {
         return result; 
     }
 
+    // Select all results that have student_id = st_id
     public List<Results> selectStudent(int st_id){
         
         String hql = "FROM Results "
-                + "where student_id = " + st_id  ;
+                + "where pk.student.student_id = " + st_id  ;
         Query query = getCurrentSession().createQuery(hql);
         List<Results> results = query.list();
                 
         return results;         
     }
     
+    // Select all results that have course_id  = crs_id
     public List<Results> selectCourse(int crs_id){
         
         String hql = "FROM Results "
-                + "where course_id = " + crs_id  ;
+                + "where pk.course.course_id = " + crs_id  ;
         Query query = getCurrentSession().createQuery(hql);
         List<Results> results = query.list();
                 
         return results;         
     }
     
+    //Delete a record result
     @Override
-    public void delete(Results st) {        	
-	getCurrentSession().delete(st);	
+    public void delete(Results result) {        	
+	getCurrentSession().delete(result);	
     }
 
+    
+    //Select all records of Results
     @Override
     public List<Results> select() {
         
+                
         List<Results> results = (List<Results>) getCurrentSession().createQuery("from Results").list();
 	
         return results;
     }
     
-    
-    
 
-//    @Override
-//    public void insert(Object ob) throws SQLException, ClassNotFoundException {
-//        String query = "Insert into result (student_id, course_id, mark1, mark2) values (?,?,?,?)";
-//        PreparedStatement preStatement = JDBC_StudentConnect.getConnection().prepareStatement(query);
-//        preStatement.setInt(1, ((Results)ob).getStudent_id());
-//        preStatement.setInt(2, ((Results)ob).getCourse_id());   
-//        preStatement.setInt(3, ((Results)ob).getMark1());   
-//        preStatement.setInt(4, ((Results)ob).getMark2());   
-//        
-//        preStatement.executeUpdate();
-//        preStatement.close();
-//        JDBC_StudentConnect.closeConnection();
-//    }
-//
-//    //Delete many rows based on student_id pr course_id
-//    //col_name must be "student_id" or "course_id"
-//    public void delete(int id, String col_name) throws SQLException, ClassNotFoundException {
-//        String query = "delete from result where " + col_name +" = " + id;
-//        try (Statement statement = JDBC_StudentConnect.getConnection().createStatement()) {
-//            statement.executeUpdate(query);
-//        }
-//        JDBC_StudentConnect.closeConnection();
-//    }
-//      
-//    //Delete one row
-//    public void delete(int student_id, int course_id) throws SQLException, ClassNotFoundException {
-//        String query = "delete from result where student_id = " + student_id +" and course_id=" + course_id;
-//        try (Statement statement = JDBC_StudentConnect.getConnection().createStatement()) {
-//            statement.executeUpdate(query);
-//        }
-//        JDBC_StudentConnect.closeConnection();
-//    }
-//    
-//   
-//    
-//    @Override
-//    public void update(Object ob) throws SQLException, ClassNotFoundException {
-//         String query = "Update result set mark1 = ?, set mark2 =? "
-//                        + " where student_id = ? and course_id =?";
-//        
-//        try (PreparedStatement preStatement = JDBC_StudentConnect.getConnection().prepareStatement(query)) {
-//            preStatement.setInt(1, ((Results)ob).getMark1());
-//            preStatement.setInt(2, ((Results)ob).getMark2());
-//            
-//            preStatement.setInt(3, ((Results)ob).getStudent_id());
-//            preStatement.setInt(4, ((Results)ob).getCourse_id());
-//            
-//            
-//            preStatement.executeUpdate();
-//        }
-//        JDBC_StudentConnect.closeConnection();
-//    }
-//
-//    @Override
-//    public List<Object> select() throws SQLException, ClassNotFoundException {
-//        
-//         List<Results> results = new ArrayList<>();
-//        Statement statement = JDBC_StudentConnect.getConnection().createStatement();
-//        String query = "Select * "
-//                + " from result order by student_id";
-//        ResultSet rslSet = statement.executeQuery(query);
-//        Results rls = null;
-//        while (rslSet.next()){
-//            rls = new Results();
-//            rls.setStudent_id(rslSet.getInt("student_id"));
-//            rls.setCourse_id(rslSet.getInt("course_id"));
-//            rls.setMark1(rslSet.getInt("mark1"));
-//            rls.setMark2(rslSet.getInt("mark2"));
-//            
-//            results.add(rls);            
-//        }
-//        
-//        rslSet.close();
-//        statement.close();
-//        JDBC_StudentConnect.closeConnection();
-//        return (List<Object>)(Object)results;
-//    }
-//
-//     @Override
-//    public Object selectById(int id) throws SQLException, ClassNotFoundException {
-//        throw new UnsupportedOperationException("Don't need this"); //To change body of generated methods, choose Tools | Templates.
-//    }
-//    
-//    
-//    public Object selectById(int student_id, int course_id) throws SQLException, ClassNotFoundException {
-//         Results rls=null;
-//        try (Statement statement = JDBC_StudentConnect.getConnection().createStatement()) {
-//            String query  = "Select student_id, course_id, mark1, mark2 "
-//                    + "from result where student_id = " +student_id +" and course_id = "+course_id;
-//            ResultSet rslSet = statement.executeQuery(query);
-//            
-//            while (rslSet.next()){
-//                rls = new Results();
-//                rls.setStudent_id(rslSet.getInt("student_id"));
-//                rls.setCourse_id(rslSet.getInt("course_id"));  
-//                rls.setMark1(rslSet.getInt("mark1")); 
-//                rls.setMark2(rslSet.getInt("mark2")); 
-//               
-//            }
-//            
-//            rslSet.close();
-//        }
-//        JDBC_StudentConnect.closeConnection();
-//        return rls;
-//    }
-//
-//    @Override
-//    public void write_to_file(String filename) throws SQLException, ClassNotFoundException {
-//        //Get information from Database
-//        String query = "Select * from result";
-//        Statement statement = JDBC_StudentConnect.getConnection().createStatement();
-//        ResultSet rlst =  statement.executeQuery(query);
-//        
-//        //Create a file       
-//        File file = new File(filename);
-//        if (!file.exists()){
-//            File citydir = new File(file.getParent());
-//            if (!citydir.exists())
-//                citydir.mkdirs();
-//            
-//            try {
-//                file.createNewFile();
-//            } catch (IOException ex) {
-//                Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
-//            }         
-//        }
-//        
-//        //write to file
-//        int student_id;
-//        int course_id;
-//        int mark1;
-//        int mark2;
-//
-//        PrintWriter fout = null;
-//        
-//        try {
-//            fout = new PrintWriter( new BufferedWriter (new FileWriter(file)));
-//        } catch (IOException ex) {
-//            Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//                
-//        while (rlst.next()){
-//            student_id  = rlst.getInt("student_id");
-//            course_id   = rlst.getInt("course_id");
-//            mark1      = rlst.getInt("mark1");
-//            mark2      = rlst.getInt("mark2");
-//         
-//            fout.println(student_id+","+course_id +","+mark1+","+mark2);               
-//        }
-//       
-//        fout.close();
-//        rlst.close();
-//        statement.close();
-//        JDBC_StudentConnect.closeConnection();
-//    }
-//
-//    @Override
-//    public void insert_from_file(String filename) throws SQLException, ClassNotFoundException {
-//       File file = new File(filename);
-//       BufferedReader fin = null;
-//        
-//        if (!file.exists()){
-//            System.out.println("File not exists!");
-//        }else{
-//            System.out.println("Insert data from file ....");
-//            
-//            try {
-//                fin = new BufferedReader( new FileReader(file));
-//            } catch (FileNotFoundException ex) {
-//                Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            
-//            String line = null;
-//            try {
-//                line = fin.readLine();
-//            } catch (IOException ex) {
-//                Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            
-//             
-//            while (line!=null){
-//                //slipt line data and add fields to Person object 
-//                                
-//                String[] components = line.split(",");
-//                                
-//                int student_id = Integer.parseInt(components[0]);
-//                int course_id = Integer.parseInt(components[1]);
-//                int mark1 = Integer.parseInt(components[2]);    
-//                int mark2 = Integer.parseInt(components[3]);
-//
-//                              
-//                Results rls = new Results(student_id,course_id,mark1,mark2);
-//                
-//                //insert to database
-//                this.insert(rls);
-//                
-//                 //read next line
-//                try {
-//                    line = fin.readLine();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
-//                }            
-//            }
-//            
-//            //close file
-//            try {                
-//                fin.close();
-//            } catch (IOException ex) {
-//                Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            
-//            System.out.println("end of inserting");
-//            
-//        }
-//    }
-//
-//    @Override
-//    public void write_to_BinaryFile(String filename) throws SQLException, ClassNotFoundException {
-//         try {
-//            String query = "Select * from Result";
-//            Statement statement = JDBC_StudentConnect.getConnection().createStatement();
-//            ResultSet rlst =  statement.executeQuery(query);
-//            
-//            //Create a file
-//            File file = new File(filename);
-//            if (!file.exists()){
-//                File citydir = new File(file.getParent());
-//                if (!citydir.exists())
-//                    citydir.mkdirs();
-//                
-//                try {
-//                    file.createNewFile();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
-//                }                
-//            }
-//                                        
-//            //write to file
-//            int student_id; 
-//            int course_id;
-//            int mark1;
-//            int mark2; 
-//            DataOutputStream fout = null;
-//            
-//            try {
-//                fout = new DataOutputStream(
-//                        new BufferedOutputStream(
-//                                new FileOutputStream(file)));
-//            } catch (IOException ex) {
-//                Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            
-//            while (rlst.next()){
-//                try {
-//                    
-//                    student_id = rlst.getInt("student_id");
-//                    course_id = rlst.getInt("course_id");
-//                    mark1 = rlst.getInt("mark1");
-//                    mark2 = rlst.getInt("mark2");
-//                  
-//                    fout.writeInt(student_id);
-//                    fout.writeInt(course_id);
-//                    fout.writeInt(mark1);
-//                    fout.writeInt(mark2);
-//                    
-//                } catch (IOException ex) {
-//                    Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
-//                }                
-//            }
-//            
-//            fout.close();
-//            rlst.close();
-//            statement.close();
-//            JDBC_StudentConnect.closeConnection();
-//        } catch (IOException ex) {
-//            Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//
-//    @Override
-//    public void delete(int id) throws SQLException, ClassNotFoundException {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
+    // Write results table to a text file
+    @Override
+    public void write_to_file(String filename) {
+        
+        //Create a file       
+        File file = new File(filename);
+        if (!file.exists()){
+            File citydir = new File(file.getParent());
+            if (!citydir.exists())
+                citydir.mkdirs();
+            
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+                Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
+            }         
+        }
+        
+        
+        //Get information from Database
+        String hql = "SELECT rlst FROM Results rlst";
+        Query query = getCurrentSession().createQuery(hql);
+        List<Results> results = query.list();
+        
+        //write to file   
+        PrintWriter fout = null;
+        
+        try {
+            fout = new PrintWriter( new BufferedWriter (new FileWriter(file)));
+        } catch (IOException ex) {
+            Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+        for(Results rlst:results){
+            int student_id  = rlst.getStudent().getStudent_id();
+            int course_id   = rlst.getCourse().getCourse_id();
+            int mark1      = rlst.getMark1();
+            int mark2      = rlst.getMark2();
+         
+            fout.println(student_id+","+course_id +","+mark1+","+mark2);               
+        }
+        fout.close();
+    }
+
+    //Import data from text file to Results table
+    @Override
+    public void insert_from_file(String filename) {
+       File file = new File(filename);
+       BufferedReader fin = null;
+        
+        if (!file.exists()){
+            System.out.println("File not exists!");
+        }else{
+            System.out.println("Insert data from file ....");
+            
+            try {
+                fin = new BufferedReader( new FileReader(file));
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            String line = null;
+            try {
+                line = fin.readLine();
+            } catch (IOException ex) {
+                Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+             
+            while (line!=null){
+                //slipt line data and add fields to Person object 
+                                
+                String[] components = line.split(",");
+                                
+                int student_id = Integer.parseInt(components[0]);
+                int course_id = Integer.parseInt(components[1]);
+                int mark1 = Integer.parseInt(components[2]);    
+                int mark2 = Integer.parseInt(components[3]);
+                System.out.println("Student " + student_id + " " + course_id + " "+ mark1 + " " +  mark2 );
+                
+                resultDao rlsDao = new resultDao();
+                studentService stService = new studentService();
+                courseService crsService = new courseService();
+
+                Student st = stService.selectById(student_id);
+                Course crs = crsService.selectById(course_id);
+                
+                 System.out.println("Student " + st);
+                 
+                  System.out.println(" Course " + crs);
+
+                if ((st==null) || (crs==null))
+                    System.out.println("Student or Course is null");
+                else{
+
+                    Results rsl = new Results(mark1,mark2);
+                    rsl.setStudent(st);
+                    rsl.setCourse(crs);
+
+                    System.out.println("Result: " + rsl);
+                //insert to database
+                    this.insert(rsl);
+                }
+  
+                
+                 //read next line
+                try {
+                    line = fin.readLine();
+                } catch (IOException ex) {
+                    Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
+                }            
+            }
+            
+            //close file
+            try {                
+                fin.close();
+            } catch (IOException ex) {
+                Logger.getLogger(resultDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            System.out.println("end of inserting");
+            
+        }
+    }
+
 
   
 

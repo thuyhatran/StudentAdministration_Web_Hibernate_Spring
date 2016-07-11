@@ -26,7 +26,7 @@ public interface courseServiceInterface {
     
      public int getNewCourseID();
 	
-   // public void write_to_file(String filename);
-    //ublic void insert_from_file(String filename);
+    public void write_to_file(String filename);
+    public void insert_from_file(String filename);
     
 }

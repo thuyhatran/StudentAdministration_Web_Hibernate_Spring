@@ -5,7 +5,6 @@
  */
 package daoimplement;
 
-import JDBC_Connection.JDBC_StudentConnect;
 import beans.Student;
 import beans.StudentsGrade;
 import daointerface.daointerface;
@@ -38,7 +37,6 @@ import util.HibernateUtil;
  *
  * @author Administrator
  */
-
 
 public class studentDao implements studentInterface {
     
@@ -85,7 +83,7 @@ public class studentDao implements studentInterface {
         this.currentTransaction = currentTransaction;
     }
     
-    
+    //Get new Student_id to create new Student row
     @Override
     public int getNewStudentID() {    
         
@@ -102,45 +100,122 @@ public class studentDao implements studentInterface {
         return curID;          
     }
     
+    // Insert new Student : entity
     @Override
     public void insert(Student entity) {      
         getCurrentSession().saveOrUpdate(entity);     
     }
 
+    // update student that has student_id  = id
     @Override
     public void update(Student entity) {       
         getCurrentSession().saveOrUpdate(entity);       
     }
 
+    //Select student that has student_id = id
     @Override
     public Student selectById(int id) {   
         Student st = (Student) getCurrentSession().get(Student.class, id);    
         return st; 
     }
 
+    // Delete student st
     @Override
     public void delete(Student st) {        	
 	getCurrentSession().delete(st);	
     }
-
+    //Select all Student information in STudent table
     @Override
     public List<Student> select() {
         List<Student> students = (List<Student>) getCurrentSession().createQuery("from Student").list();
         return students;
     }
     
+
+  
     
-    
-    
-    
+      //Method for student only
+    //Get all Grade of students
     @Override
-    public void write_to_file(String filename)  {
-        try {
-            //Get information from Database
-            String query = "Select student_id, first_name, last_name, gender, to_char(start_date,'DD-MM-YYYY'), email from student";
-            Statement statement = JDBC_StudentConnect.getConnection().createStatement();
-            ResultSet rlst =  statement.executeQuery(query);
+     public List<StudentsGrade> getGrades() {
+        List<StudentsGrade> stdGrad_list;
+       
+        String hql = "Select st.student_id,st.first_name,st.last_name, st.gender, "
+                + "crs.course_name, rls.mark1, rls.mark2 "
+                + "from Student as st join st.results as rls join rls.pk.course as crs" ;
+      
+        Query query = getCurrentSession().createQuery(hql);  
+        List<Object[]> studentGrades = query.list();
+
+       
+        StudentsGrade stdGrad = null;
+        stdGrad_list = new ArrayList<StudentsGrade>();
+                 
+       
+        for (Object[] obj:studentGrades){
+            int student_id = (int)obj[0];
+            String first_name =  (String) obj[1];
+            String last_name =  (String) obj[2];
+            String gender = (String) obj[3];
+            String course_name = (String)obj[4];
+            int  mark1 = (int) obj[5];
+            int  mark2 = (int) obj[6];
             
+            stdGrad = new StudentsGrade(student_id,first_name,last_name,gender,course_name,mark1,mark2 );
+                 
+            stdGrad.CaculateGrade();
+
+            stdGrad_list.add(stdGrad);
+                             
+        }
+         
+
+        return stdGrad_list;
+        
+    }
+     
+     //Get Transcript of student that has student_id  = student_id
+    @Override
+      public List<StudentsGrade> getTranscript(int student_id)  {
+          List<StudentsGrade> stdGrad_list;
+       
+        String hql = "Select st.student_id,st.first_name,st.last_name, st.gender, "
+                + "crs.course_name, rls.mark1, rls.mark2 "
+                + "from Student as st join st.results as rls join rls.pk.course as crs"
+                + " where st.student_id = " + student_id ;
+      
+        Query query = getCurrentSession().createQuery(hql);  
+        List<Object[]> studentGrades = query.list();
+
+       
+        StudentsGrade stdGrad = null;
+        stdGrad_list = new ArrayList<StudentsGrade>();
+                 
+       
+        for (Object[] obj:studentGrades){
+           // int student_id = (int)obj[0];
+            String first_name =  (String) obj[1];
+            String last_name =  (String) obj[2];
+            String gender = (String) obj[3];
+            String course_name = (String)obj[4];
+            int  mark1 = (int) obj[5];
+            int  mark2 = (int) obj[6];
+            
+            stdGrad = new StudentsGrade(student_id,first_name,last_name,gender,course_name,mark1,mark2 );
+                 
+            stdGrad.CaculateGrade();
+
+            stdGrad_list.add(stdGrad);
+                             
+        }
+
+        return stdGrad_list;   
+    }
+  
+      //Write all data of Student Table to a text file named filename
+      @Override
+        public void write_to_file(String filename)  {
+                
             //Create a file
             File file = new File(filename);
             if (!file.exists()){
@@ -156,11 +231,6 @@ public class studentDao implements studentInterface {
             }
             
             //write to file
-            int id;
-            String firstname;
-            String lastname;
-            String gender;
-            String startdate, email;
             PrintWriter fout = null;
             
             try {
@@ -169,26 +239,31 @@ public class studentDao implements studentInterface {
                 Logger.getLogger(studentDao.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            while (rlst.next()){
-                id          = rlst.getInt("student_id");
-                firstname   = rlst.getString("first_name");
-                lastname    = rlst.getString("last_name");
-                gender      = rlst.getString("gender");
-                startdate   = rlst.getString("to_char(start_date,'DD-MM-YYYY')");
-                email   = rlst.getString("email");
+              //Get information from Database
+            
+                       
+            String hql = "SELECT st FROM Student st";
+            Query query = getCurrentSession().createQuery(hql);
+            List<Student> students = query.list();
+            
+            
+            for (Student st:students){
+                int id          = st.getStudent_id();
+                String firstname   = st.getFirst_name();
+                String lastname    = st.getLast_name();
+                String gender      = st.getGender();
+                String startdate   = st.getStart_date();
+                String email   = st.getEmail();
+                
                 fout.println(id+","+firstname +","+lastname+","+gender+","+startdate+","+email);
             }
             
             fout.close();
-            rlst.close();
-            statement.close();
-            JDBC_StudentConnect.closeConnection();
-        } catch (SQLException ex) {
-            Logger.getLogger(studentDao.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(studentDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            
     }
+      
+      
+    //Import all data of Course Table from a text file named filename
 
     @Override
     public void insert_from_file(String filename) {

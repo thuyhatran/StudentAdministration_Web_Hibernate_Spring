@@ -6,7 +6,6 @@
 package daoimplement;
 
 
-import JDBC_Connection.JDBC_StudentConnect;
 import beans.Course;
 import beans.Results;
 import beans.Student;
@@ -85,8 +84,8 @@ public class courseDao implements courseInterface<Course>{
         this.currentTransaction = currentTransaction;
     }
     
-    
-       @Override
+    //Get new course ID to create a new Course row
+    @Override
     public int getNewCourseID() {    
         
         String hql = "SELECT max(course_id) FROM Course";
@@ -132,7 +131,7 @@ public class courseDao implements courseInterface<Course>{
 //              
 //    }
      
-
+    //insert a new record
     @Override
     public void insert(Course entity) {
        
@@ -140,6 +139,7 @@ public class courseDao implements courseInterface<Course>{
        
     }
 
+    // update a record
     @Override
     public void update(Course entity) {
         
@@ -147,6 +147,7 @@ public class courseDao implements courseInterface<Course>{
         
     }
 
+    // Select a course that has course_id  = id
     @Override
     public Course selectById(int id) {
        
@@ -155,11 +156,13 @@ public class courseDao implements courseInterface<Course>{
         return st; 
     }
 
+    //Delete a course
     @Override
-    public void delete(Course st) {        	
-	getCurrentSession().delete(st);	
+    public void delete(Course course) {        	
+	getCurrentSession().delete(course);	
     }
 
+    //Select all course in Course table
     @Override
     public List<Course> select() {
         
@@ -169,52 +172,49 @@ public class courseDao implements courseInterface<Course>{
     }
     
     
+    //Write all data of Course Table to a text file named filename
     @Override
     public void write_to_file(String filename) {
-        //Get information from Database
-        String query = "Select * from Course";
-        try (Statement statement = JDBC_StudentConnect.getConnection().createStatement()) {
-            ResultSet rlst =  statement.executeQuery(query);
-            //Create a file
-            File file = new File(filename);
-            if (!file.exists()){
-                File citydir = new File(file.getParent());
-                if (!citydir.exists())
-                    citydir.mkdirs();
-                
-                try {
-                    file.createNewFile();
-                } catch (IOException ex) {
-                    Logger.getLogger(courseDao.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            //write to file
-            
-            int course_id;
-            String course_name;
-            PrintWriter fout = null;
+       
+
+        //Create a file
+        File file = new File(filename);
+        if (!file.exists()){
+            File citydir = new File(file.getParent());
+            if (!citydir.exists())
+                citydir.mkdirs();
+
             try {
-                fout = new PrintWriter( new BufferedWriter (new FileWriter(file)));
+                file.createNewFile();
             } catch (IOException ex) {
                 Logger.getLogger(courseDao.class.getName()).log(Level.SEVERE, null, ex);
             }
-            while (rlst.next()){
-                
-                course_id   = rlst.getInt("course_id");
-                course_name    = rlst.getString("course_name");
-                
-                fout.println(course_id +","+course_name);
-            }
-            fout.close();
-            rlst.close();
-        JDBC_StudentConnect.closeConnection();
-    }      catch (SQLException ex) {
-               Logger.getLogger(courseDao.class.getName()).log(Level.SEVERE, null, ex);
-           } catch (ClassNotFoundException ex) {
-               Logger.getLogger(courseDao.class.getName()).log(Level.SEVERE, null, ex);
-           }
+        }
+
+         //Get information from Database
+        String hql = "SELECT crs FROM Course crs";
+        Query query = getCurrentSession().createQuery(hql);
+        List<Course> courses = query.list();
+
+        //write to file
+        PrintWriter fout = null;
+        try {
+            fout = new PrintWriter( new BufferedWriter (new FileWriter(file)));
+        } catch (IOException ex) {
+            Logger.getLogger(courseDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        for(Course crs:courses){
+            int  course_id   = crs.getCourse_id();
+            String course_name    = crs.getCourse_name();
+
+            fout.println(course_id +","+course_name);
+        }
+        fout.close();
+
     }
 
+    ////Import all data of Course Table from a text file named filename
     @Override
     public void insert_from_file(String filename) {
          File file = new File(filename);

@@ -20,6 +20,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.FetchMode;
+import org.hibernate.annotations.Cascade;
+import static org.hibernate.annotations.CascadeType.DELETE;
+import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 import org.hibernate.annotations.Fetch;
 
 /**
@@ -50,7 +53,10 @@ public class Student implements Serializable {
     @Column(name="email", length=40)
     private String email;
     
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    //@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    //@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "pk.student")
+    @OneToMany(fetch = FetchType.EAGER,  mappedBy = "pk.student")
+   // @Cascade({SAVE_UPDATE, DELETE})
    // @Fetch(FetchMode.SELECT)
     private Set<Results> results;
 
@@ -89,6 +95,11 @@ public class Student implements Serializable {
       
     public Student() {
         this.results = new HashSet<Results>();
+    }
+
+    Student(int student_id) {
+       this.results = new HashSet<Results>();
+        this.student_id = student_id;
     }
 
     public int getStudent_id() {

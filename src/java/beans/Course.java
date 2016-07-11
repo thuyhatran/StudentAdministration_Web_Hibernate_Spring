@@ -18,6 +18,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
+import static org.hibernate.annotations.CascadeType.DELETE;
+import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
 /**
  *
@@ -33,8 +36,10 @@ public class Course implements Serializable {
     private String course_name;
 
     //@OneToMany(mappedBy = "course")
-   // @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+   //@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,mappedBy = "pk.course")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.course")
+   //@Cascade({SAVE_UPDATE, DELETE})
     private Set<Results> results = new HashSet<Results>();
     
     public Course(int course_id, String course_name) {
@@ -43,6 +48,10 @@ public class Course implements Serializable {
     }
 
     public Course() {
+    }
+
+    public Course(int course_id) {
+        this.course_id = course_id;
     }
 
     public int getCourse_id() {
@@ -73,7 +82,6 @@ public class Course implements Serializable {
     public String toString() {
         return "Course{" + "course_id=" + course_id + ", course_name=" + course_name + '}';
     }
-    
-    
+
     
 }

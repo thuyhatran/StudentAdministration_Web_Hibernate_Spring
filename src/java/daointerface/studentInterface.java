@@ -6,6 +6,7 @@
 package daointerface;
 
 import beans.Student;
+import beans.StudentsGrade;
 import java.util.List;
 
 /**
@@ -25,6 +26,9 @@ public interface studentInterface {
     public List<Student> select();
     
     public int getNewStudentID();
+    
+    public List<StudentsGrade> getGrades();
+     public List<StudentsGrade> getTranscript(int student_id) ;
 	
     public void write_to_file(String filename);
     public void insert_from_file(String filename);

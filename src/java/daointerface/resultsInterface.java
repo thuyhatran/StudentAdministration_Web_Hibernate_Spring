@@ -23,4 +23,7 @@ public interface resultsInterface<T> {
     	
     public List<T> select();
     
+    public void write_to_file(String filename);
+    public void insert_from_file(String filename);
+    
 }

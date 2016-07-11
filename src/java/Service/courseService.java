@@ -5,7 +5,7 @@
  */
 package Service;
 
-import JDBC_Connection.JDBC_StudentConnect;
+
 import beans.Course;
 import beans.Student;
 import daoimplement.courseDao;
@@ -86,7 +86,22 @@ public class courseService implements courseServiceInterface{
         
     }
     
-    
+    @Override
+    public void write_to_file(String filename)  {
+        stDao.openCurrentSession();
+        stDao.write_to_file(filename);
+        stDao.closeCurrentSession();  
+        
+       
+    }
+
+    @Override
+    public void insert_from_file(String filename) {
+        stDao.openCurrentSessionwithTransaction();
+        stDao.insert_from_file(filename);
+        stDao.closeCurrentSessionwithTransaction(); 
+     
+    } 
     
     
 }

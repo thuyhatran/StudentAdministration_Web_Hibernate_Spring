@@ -5,8 +5,9 @@
  */
 package Service;
 
-import JDBC_Connection.JDBC_StudentConnect;
+
 import beans.Student;
+import beans.StudentsGrade;
 import daoimplement.studentDao;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -83,21 +84,37 @@ public class studentService implements studentServiceInterface{
         
         return curID;    
     }
-    
+
     
     @Override
     public void write_to_file(String filename)  {
-       
+        stDao.openCurrentSession();
+        stDao.write_to_file(filename);
+        stDao.closeCurrentSession();  
+
     }
 
     @Override
     public void insert_from_file(String filename) {
-     
+        stDao.openCurrentSessionwithTransaction();
+        stDao.insert_from_file(filename);
+        stDao.closeCurrentSessionwithTransaction(); 
     } 
 
-   
-    
-    
-    
+    @Override
+    public List<StudentsGrade> getGrades() {
+        stDao.openCurrentSession();
+        List<StudentsGrade> student_Grades = stDao.getGrades();
+        stDao.closeCurrentSession(); 
+        return student_Grades;
+    }
+
+    @Override
+    public List<StudentsGrade> getTranscript(int student_id) {
+        stDao.openCurrentSession();
+        List<StudentsGrade> student_Grades = stDao.getTranscript(student_id);
+        stDao.closeCurrentSession(); 
+        return student_Grades;
+    }
          
 }

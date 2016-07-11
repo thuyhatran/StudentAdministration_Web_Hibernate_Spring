@@ -5,7 +5,9 @@
  */
 package Service;
 
+import beans.Course;
 import beans.Results;
+import beans.Student;
 import daoimplement.resultDao;
 import java.util.List;
 
@@ -27,6 +29,12 @@ public class resultService implements resultServiceInterface{
         stDao.openCurrentSessionwithTransaction();
         stDao.insert(entity);
         stDao.closeCurrentSessionwithTransaction();
+        
+        
+        
+         
+        
+        
     }
 
     @Override
@@ -57,6 +65,7 @@ public class resultService implements resultServiceInterface{
          stDao.openCurrentSession();
         List<Results> results = stDao.select();
 	stDao.closeCurrentSession();
+        
         return results;
     }
 
@@ -86,6 +95,22 @@ public class resultService implements resultServiceInterface{
         
     }
     
+        @Override
+    public void write_to_file(String filename)  {
+        stDao.openCurrentSession();
+        stDao.write_to_file(filename);
+        stDao.closeCurrentSession();  
+        
+       
+    }
+
+    @Override
+    public void insert_from_file(String filename) {
+        stDao.openCurrentSessionwithTransaction();
+        stDao.insert_from_file(filename);
+        stDao.closeCurrentSessionwithTransaction(); 
+     
+    } 
     
     
     

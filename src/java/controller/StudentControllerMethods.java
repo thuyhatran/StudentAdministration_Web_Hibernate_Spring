@@ -180,10 +180,7 @@ public class StudentControllerMethods {
             request.setAttribute("update_disabled", "");
             request.setAttribute("search_disabled", "disabled");
             request.setAttribute("delete_disabled", "");
-                
-            
-       
-        
+
     }
     
     
@@ -268,20 +265,17 @@ public class StudentControllerMethods {
     static public void studentGradeCalled(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-//        try {
-//            
-//            studentDao stDao = new studentDao();
-//   
-//            //Prepared for refresh page with student's list
-//            List<StudentsGrade> stdGrade =  stDao.getGrades();// = new ArrayList<>();
-//        
-//            request.setAttribute("studentsGrade", stdGrade);
-//            
-//        } catch (SQLException | ClassNotFoundException ex) {
-//            Logger.getLogger(StudentControllerMethods.class.getName()).log(Level.SEVERE, null, ex);
-//        }   
+   
+            
+            studentService stService = new studentService();
+   
+            //Prepared for refresh page with student's list
+            List<StudentsGrade> stdGrade =  stService.getGrades();// = new ArrayList<>();
+        
+            request.setAttribute("studentsGrade", stdGrade);
+                 
     }
-    
+
      
     /**
      *
@@ -293,18 +287,11 @@ public class StudentControllerMethods {
     static public void transcriptCalled(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        int student_id = Integer.parseInt(request.getParameter("student_id"));
         studentService stService = new studentService();
         
-        List<StudentsGrade> students = new ArrayList<>();     
+        List<StudentsGrade> students = stService.getTranscript(student_id);
          
-        int student_id = Integer.parseInt(request.getParameter("student_id"));
-         
-//        try {
-//            students =  stDao.getTranscript(student_id);
-//        } catch (SQLException | ClassNotFoundException ex) {
-//            Logger.getLogger(StudentController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        
                
         request.setAttribute("student_id",student_id);
         request.setAttribute("first_name", students.get(0).getFirst_name());
@@ -313,7 +300,6 @@ public class StudentControllerMethods {
         request.setAttribute("students", students);
         
      }
-    
     
     //---- for doPost----
 

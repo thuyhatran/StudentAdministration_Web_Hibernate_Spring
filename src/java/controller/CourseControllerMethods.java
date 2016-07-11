@@ -181,29 +181,28 @@ public class CourseControllerMethods {
             List<Course> courses = new ArrayList<>();
             courses =  crsDao.select();
             request.setAttribute("courses", courses);
-            
-            
-       
-                
+      
     }
     
     
-      static public void deleteClicked(HttpServletRequest request, HttpServletResponse response){
+      static public void deleteClicked(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
       
-            int course_id = Integer.parseInt(request.getParameter("course_id"));
-            
-             //delete all result of this course
-            resultService rslSer = new resultService();
-            rslSer.deleteCourse(course_id);
-            
-            //delete this course
-            courseService crsService = new courseService();
-            crsService.delete(course_id);
+//            int course_id = Integer.parseInt(request.getParameter("course_id"));
+//            
+//             //delete all result of this course
+////            resultService rslSer = new resultService();
+////            rslSer.deleteCourse(course_id);
+//            
+//            //delete this course
+//            courseService crsService = new courseService();
+//            crsService.delete(course_id);
+//
+//            //prepared to forward to course_list
+//            List<Course> courses = new ArrayList<>();
+//            courses =  crsService.select();
+//            request.setAttribute("courses", courses);
 
-            //prepared to forward to course_list
-            List<Course> courses = new ArrayList<>();
-            courses =  crsService.select();
-            request.setAttribute("courses", courses);
+               deleteCalled(request,response);
             
             
         

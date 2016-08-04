@@ -96,14 +96,13 @@ public class Results implements Serializable {
     public String toString() {
         return "Results{" + "pk= (" + pk.getStudent().getStudent_id()+ pk.getCourse().getCourse_id()+ ") , mark1=" + mark1 + ", mark2=" + mark2 + '}';
     }
-    
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.pk);
-        hash = 59 * hash + this.mark1;
-        hash = 59 * hash + this.mark2;
+        hash = 37 * hash + Objects.hashCode(this.pk);
+        hash = 37 * hash + this.mark1;
+        hash = 37 * hash + this.mark2;
         return hash;
     }
 
@@ -130,6 +129,9 @@ public class Results implements Serializable {
         }
         return true;
     }
+    
+
+   
 
     
     

@@ -49,6 +49,14 @@ public class StudentsGrade {
     }
 
     
+    public StudentsGrade(int student_id, String first_name, String last_name, String gender) {
+        this.student_id = student_id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.gender = gender;
+
+    }
+    
 
     
     public String getCourse() {

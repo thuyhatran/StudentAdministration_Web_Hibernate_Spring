@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import org.hibernate.FetchMode;
 import org.hibernate.annotations.Cascade;
 import static org.hibernate.annotations.CascadeType.DELETE;
+import static org.hibernate.annotations.CascadeType.DELETE_ORPHAN;
 import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 import org.hibernate.annotations.Fetch;
 
@@ -56,16 +57,17 @@ public class Student implements Serializable {
     //@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     //@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "pk.student")
     @OneToMany(fetch = FetchType.EAGER,  mappedBy = "pk.student")
+ //   @Cascade({SAVE_UPDATE, DELETE, DELETE_ORPHAN})
    // @Cascade({SAVE_UPDATE, DELETE})
    // @Fetch(FetchMode.SELECT)
-    private Set<Results> results;
+    private Set<Results> results = new HashSet<Results>();;
 
     
     
    //contructors
 
     public Student(int student_id, String first_name, String last_name, String gender, String start_date, String email) {
-        this.results = new HashSet<Results>();
+       
         this.student_id = student_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -75,7 +77,7 @@ public class Student implements Serializable {
     }
     
       public Student(String first_name, String last_name, String gender, String start_date, String email) {
-        this.results = new HashSet<Results>();
+        
         
         this.first_name = first_name;
         this.last_name = last_name;
@@ -85,7 +87,7 @@ public class Student implements Serializable {
     }
 
        public Student(int student_id,String first_name, String last_name) {
-        this.results = new HashSet<Results>();
+        
         this.student_id = student_id;
         this.first_name = first_name;
         this.last_name = last_name;

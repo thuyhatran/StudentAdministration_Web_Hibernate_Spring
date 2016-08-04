@@ -142,7 +142,7 @@ public class studentDao implements studentInterface {
        
         String hql = "Select st.student_id,st.first_name,st.last_name, st.gender, "
                 + "crs.course_name, rls.mark1, rls.mark2 "
-                + "from Student as st join st.results as rls join rls.pk.course as crs" ;
+                + "from Student as st left join st.results as rls left join rls.pk.course as crs" ;
       
         Query query = getCurrentSession().createQuery(hql);  
         List<Object[]> studentGrades = query.list();
@@ -157,13 +157,16 @@ public class studentDao implements studentInterface {
             String first_name =  (String) obj[1];
             String last_name =  (String) obj[2];
             String gender = (String) obj[3];
-            String course_name = (String)obj[4];
-            int  mark1 = (int) obj[5];
-            int  mark2 = (int) obj[6];
             
-            stdGrad = new StudentsGrade(student_id,first_name,last_name,gender,course_name,mark1,mark2 );
-                 
-            stdGrad.CaculateGrade();
+             if ((obj[4]==null )||(obj[5]==null)||(obj[6]==null)){
+                stdGrad = new StudentsGrade(student_id,first_name,last_name,gender);
+            }else{
+                String course_name = (String)obj[4];
+                int  mark1 = (int) obj[5];
+                int  mark2 = (int) obj[6];
+                stdGrad = new StudentsGrade(student_id,first_name,last_name,gender,course_name,mark1,mark2 );
+                stdGrad.CaculateGrade();
+            }
 
             stdGrad_list.add(stdGrad);
                              
@@ -181,7 +184,7 @@ public class studentDao implements studentInterface {
        
         String hql = "Select st.student_id,st.first_name,st.last_name, st.gender, "
                 + "crs.course_name, rls.mark1, rls.mark2 "
-                + "from Student as st join st.results as rls join rls.pk.course as crs"
+                + "from Student as st left join st.results as rls left join rls.pk.course as crs"
                 + " where st.student_id = " + student_id ;
       
         Query query = getCurrentSession().createQuery(hql);  
@@ -197,13 +200,17 @@ public class studentDao implements studentInterface {
             String first_name =  (String) obj[1];
             String last_name =  (String) obj[2];
             String gender = (String) obj[3];
-            String course_name = (String)obj[4];
-            int  mark1 = (int) obj[5];
-            int  mark2 = (int) obj[6];
             
-            stdGrad = new StudentsGrade(student_id,first_name,last_name,gender,course_name,mark1,mark2 );
-                 
-            stdGrad.CaculateGrade();
+            if ((obj[4]==null )||(obj[5]==null)||(obj[6]==null)){
+                stdGrad = new StudentsGrade(student_id,first_name,last_name,gender);
+            }else{
+                String course_name = (String)obj[4];
+                int  mark1 = (int) obj[5];
+                int  mark2 = (int) obj[6];
+                stdGrad = new StudentsGrade(student_id,first_name,last_name,gender,course_name,mark1,mark2 );
+                stdGrad.CaculateGrade();
+            }
+            
 
             stdGrad_list.add(stdGrad);
                              

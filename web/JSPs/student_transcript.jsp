@@ -30,12 +30,12 @@
             </tr>
             <tr>
                <th>Name:</th> 
-               <td><c:out value ="${first_name}" /> &nbsp; <c:out value ="${last_name}" /></td>
+               <td><c:out value ="${students[0].first_name}" /> &nbsp; <c:out value ="${students[0].last_name}" /></td>
             </tr>
             
             <tr>
                 <th>Gender:</th>
-                <td><c:out value ="${gender}" /></td>
+                <td><c:out value ="${students[0].gender}" /></td>
             </tr>           
         </table> 
         

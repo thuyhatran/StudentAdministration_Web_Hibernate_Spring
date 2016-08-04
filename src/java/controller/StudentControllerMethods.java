@@ -210,7 +210,7 @@ public class StudentControllerMethods {
         String content = request.getParameter("content");
 
         final String username="javacourse2016@gmail.com";
-        final String password ="matkhaumoi2016";
+        final String password ="";
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -291,13 +291,14 @@ public class StudentControllerMethods {
         studentService stService = new studentService();
         
         List<StudentsGrade> students = stService.getTranscript(student_id);
-         
-               
-        request.setAttribute("student_id",student_id);
-        request.setAttribute("first_name", students.get(0).getFirst_name());
-        request.setAttribute("last_name", students.get(0).getLast_name());
-        request.setAttribute("gender", students.get(0).getGender());
-        request.setAttribute("students", students);
+        
+        //if (students.size()>0){  
+           request.setAttribute("student_id",student_id);
+//            request.setAttribute("first_name", students.get(0).getFirst_name());
+//            request.setAttribute("last_name", students.get(0).getLast_name());
+//            request.setAttribute("gender", students.get(0).getGender());
+            request.setAttribute("students", students);
+        //}
         
      }
     

@@ -62,9 +62,9 @@ public class ResultsPK implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.student);
-        hash = 97 * hash + Objects.hashCode(this.course);
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.student);
+        hash = 17 * hash + Objects.hashCode(this.course);
         return hash;
     }
 
@@ -88,6 +88,8 @@ public class ResultsPK implements Serializable{
         }
         return true;
     }
+
+ 
     
    
     

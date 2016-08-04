@@ -20,6 +20,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import static org.hibernate.annotations.CascadeType.DELETE;
+import static org.hibernate.annotations.CascadeType.DELETE_ORPHAN;
 import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
 /**
@@ -39,7 +40,7 @@ public class Course implements Serializable {
    //@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     //@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,mappedBy = "pk.course")
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "pk.course")
-   //@Cascade({SAVE_UPDATE, DELETE})
+  //  @Cascade({SAVE_UPDATE, DELETE, DELETE_ORPHAN})
     private Set<Results> results = new HashSet<Results>();
     
     public Course(int course_id, String course_name) {

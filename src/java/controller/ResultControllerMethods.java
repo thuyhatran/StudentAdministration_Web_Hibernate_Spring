@@ -13,18 +13,11 @@ import beans.Course;
 import beans.Results;
 import beans.Results_view;
 import beans.Student;
-import daoimplement.courseDao;
-import daoimplement.resultDao;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.JOptionPane;
 
 /**
  *

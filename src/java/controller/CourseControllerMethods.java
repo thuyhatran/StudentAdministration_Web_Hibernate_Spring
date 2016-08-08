@@ -9,20 +9,12 @@ import Service.courseService;
 import Service.resultService;
 import Service.studentService;
 import beans.Course;
-import beans.Student;
-import daoimplement.resultDao;
-import daoimplement.courseDao;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.JOptionPane;
 
 
 

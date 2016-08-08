@@ -5,7 +5,6 @@
  */
 package daointerface;
 
-import beans.Student;
 import java.util.List;
 
 /**

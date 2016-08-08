@@ -9,15 +9,9 @@ import Service.resultService;
 import Service.studentService;
 import beans.Student;
 import beans.StudentsGrade;
-import daoimplement.resultDao;
-import daoimplement.studentDao;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,9 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.persistence.Query;
-//import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 
 /**

@@ -10,6 +10,7 @@ import beans.Results_view;
 import daoimplement.resultDao;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -17,17 +18,17 @@ import java.util.List;
  */
 public class resultViewService implements resultViewServiceInterface{
     
-    private static resultDao stDao;
+    private static resultDao rlsDao;
     
     public resultViewService() {
-        stDao = new resultDao();
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        rlsDao = context.getBean(resultDao.class);
     }
         
     @Override
     public Results_view selectById(int st_id, int crs_id) {
-        stDao.openCurrentSession();
-        Results st = stDao.selectById(st_id, crs_id);
-        stDao.closeCurrentSession();
+  
+        Results st = rlsDao.selectById(st_id, crs_id);
         Results_view rls_view = new Results_view(st);
         return rls_view; 
     }
@@ -36,9 +37,7 @@ public class resultViewService implements resultViewServiceInterface{
 
     @Override
     public List<Results_view> select() {
-         stDao.openCurrentSession();
-        List<Results> results = stDao.select();
-	stDao.closeCurrentSession();
+        List<Results> results = rlsDao.select();
         
         List<Results_view> results_view = new ArrayList<>();
         Results_view result_view = null;
@@ -49,8 +48,4 @@ public class resultViewService implements resultViewServiceInterface{
         return results_view;
     }
 
-    
-    
-    
-    
 }

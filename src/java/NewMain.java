@@ -1,6 +1,6 @@
 
-import beans.Course;
-import beans.Student;
+import model.Course;
+import model.Student;
 import daoimplement.courseDao;
 import java.util.List;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -26,9 +26,7 @@ public class NewMain {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         Student student1 = new Student();
        
-        
-     
-        
+
 //        student1 = stService.selectById(2);
 //        
 //        System.out.println(student1);

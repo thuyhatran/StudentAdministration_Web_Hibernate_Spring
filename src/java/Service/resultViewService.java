@@ -5,8 +5,8 @@
  */
 package Service;
 
-import beans.Results;
-import beans.Results_view;
+import model.Results;
+import model.Results_view;
 import daoimplement.resultDao;
 import java.util.ArrayList;
 import java.util.List;

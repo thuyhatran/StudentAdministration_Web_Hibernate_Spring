@@ -8,9 +8,9 @@ package daoimplement;
 
 import Service.courseService;
 import Service.studentService;
-import beans.Course;
-import beans.Results;
-import beans.Student;
+import model.Course;
+import model.Results;
+import model.Student;
 import daointerface.resultsInterface;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

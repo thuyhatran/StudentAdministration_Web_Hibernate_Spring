@@ -5,8 +5,8 @@
  */
 package daoimplement;
 
-import beans.Student;
-import beans.StudentsGrade;
+import model.Student;
+import model.StudentsGrade;
 import daointerface.studentInterface;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

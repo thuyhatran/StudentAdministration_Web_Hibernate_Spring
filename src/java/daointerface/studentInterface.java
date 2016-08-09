@@ -5,8 +5,8 @@
  */
 package daointerface;
 
-import beans.Student;
-import beans.StudentsGrade;
+import model.Student;
+import model.StudentsGrade;
 import java.util.List;
 
 /**

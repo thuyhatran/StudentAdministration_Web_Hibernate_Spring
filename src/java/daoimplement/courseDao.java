@@ -6,7 +6,7 @@
 package daoimplement;
 
 
-import beans.Course;
+import model.Course;
 import daointerface.courseInterface;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -18,7 +18,6 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 
 
@@ -27,8 +26,6 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
  * @author Administrator
  */
 public class courseDao implements courseInterface<Course>{
-    
-
     
      HibernateTemplate template;  
   
@@ -66,8 +63,7 @@ public class courseDao implements courseInterface<Course>{
     // update a record
     @Override
     public void update(Course entity) {    
-        template.update(entity);
-        
+        template.update(entity); 
     }
 
     // Select a course that has course_id  = id

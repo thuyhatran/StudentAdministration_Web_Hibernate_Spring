@@ -5,7 +5,7 @@
  */
 package Service;
 
-import beans.Results;
+import model.Results;
 import java.util.List;
 
 /**

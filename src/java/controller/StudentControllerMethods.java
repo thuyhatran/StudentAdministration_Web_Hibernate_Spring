@@ -7,8 +7,8 @@ package controller;
 
 import Service.resultService;
 import Service.studentService;
-import beans.Student;
-import beans.StudentsGrade;
+import model.Student;
+import model.StudentsGrade;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

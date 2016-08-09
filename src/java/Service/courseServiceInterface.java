@@ -5,7 +5,7 @@
  */
 package Service;
 
-import beans.Course;
+import model.Course;
 import java.util.List;
 
 /**

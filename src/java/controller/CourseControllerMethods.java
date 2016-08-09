@@ -8,7 +8,7 @@ package controller;
 import Service.courseService;
 import Service.resultService;
 import Service.studentService;
-import beans.Course;
+import model.Course;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,7 +125,6 @@ public class CourseControllerMethods {
     static public void editCalled(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-  
             
             //Get information of the course tha has the course_id getting from course_list 
             //and then send this information to course_form to do the modification
@@ -133,7 +132,7 @@ public class CourseControllerMethods {
             //get course's info
             int course_id = Integer.parseInt(request.getParameter("course_id"));
             courseService crsService = new courseService();            
-            Course course = (Course)crsService.selectById(course_id);                
+            Course course = crsService.selectById(course_id);                
             // set attribute 
             request.setAttribute("course_id", course_id);            
             request.setAttribute("course",course); 
@@ -144,18 +143,10 @@ public class CourseControllerMethods {
             request.setAttribute("update_disabled", "");
             request.setAttribute("search_disabled", "disabled");
             request.setAttribute("delete_disabled", "");
-                
-    
-        
+
     }
     
-    
-    
 
-    
-    
-    
-    
     //---- for doPost----
     static public void insertClicked(HttpServletRequest request, HttpServletResponse response){
         

@@ -6,7 +6,7 @@
 package Service;
 
 
-import beans.Course;
+import model.Course;
 import daoimplement.courseDao;
 import java.util.List;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

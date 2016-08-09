@@ -6,8 +6,8 @@
 package Service;
 
 
-import beans.Student;
-import beans.StudentsGrade;
+import model.Student;
+import model.StudentsGrade;
 import daoimplement.studentDao;
 import java.util.List;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

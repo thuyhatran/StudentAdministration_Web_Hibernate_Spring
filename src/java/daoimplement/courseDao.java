@@ -1,7 +1,7 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * To change this sessionFactory file, choose Tools | Templates
+ * and open the sessionFactory in the editor.
  */
 package daoimplement;
 
@@ -18,30 +18,35 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.springframework.orm.hibernate4.HibernateTemplate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 
 /**
  *
  * @author Administrator
  */
+
 public class courseDao implements courseInterface<Course>{
     
-     HibernateTemplate template;  
-  
-   
-    public void setTemplate(HibernateTemplate template) {  
-        this.template = template;  
-    }  
+    private SessionFactory sessionFactory;
+    
+    public void setSessionFactory(SessionFactory sessionFactory){
+            this.sessionFactory = sessionFactory;
+    }
       
+     private Session  getCurrentSession(){
+        return this.sessionFactory.getCurrentSession();
+        
+    }
     
     //Get new course ID to create a new Course row
     @Override
     public int getNewCourseID() {    
         
         String hql = "SELECT max(course_id) FROM Course";
-           
-        List<Object> Id = template.find(hql); //query.list();
+        
+        List<Object> Id = getCurrentSession().createQuery(hql).list();
         
         int curID =1; 
         if (!(Id.get(0)==null)){
@@ -56,37 +61,42 @@ public class courseDao implements courseInterface<Course>{
     //insert a new record
     @Override
     public void insert(Course entity) {
-        template.save(entity);   
+        
+            
+        getCurrentSession().save(entity);   
         System.out.println("Called save(course)");
     }
 
     // update a record
     @Override
-    public void update(Course entity) {    
-        template.update(entity); 
+    public void update(Course entity) {  
+         
+        getCurrentSession().update(entity);
+        
     }
 
     // Select a course that has course_id  = id
     @Override
     public Course selectById(int id) {
-       
-        Course crs =  template.get(Course.class, id);
+    
+        Course crs =  (Course) getCurrentSession().get(Course.class, id);
        
         return crs; 
     }
 
     //Delete a course
     @Override
-    public void delete(Course course) {        	
-	template.delete(course);	
+    public void delete(Course course) {     
+              
+	getCurrentSession().delete(course);	
     }
 
     //Select all course in Course table
     @Override
     public List<Course> select() {
         
-        List<Course> students = template.loadAll(Course.class);
-        return students;
+        List<Course> courses = getCurrentSession().createQuery("from Course").list();
+        return courses;
     }
     
     
@@ -109,8 +119,10 @@ public class courseDao implements courseInterface<Course>{
         }
 
          //Get information from Database
-      
-        List<Course> courses = template.loadAll(Course.class);
+        Session session = this.sessionFactory.getCurrentSession();
+        List<Course> courses = session.createQuery("from Course").list();
+        
+        
 
         //write to file
         PrintWriter fout = null;

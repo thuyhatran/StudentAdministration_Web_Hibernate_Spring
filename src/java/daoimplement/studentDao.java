@@ -21,16 +21,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
+import org.springframework.stereotype.Component;
 
 /**
  *
- * @author Administrator
+ * @author Thuy Ha
  */
 
+@Component
 public class studentDao implements studentInterface {
-    
 
-     
     HibernateTemplate template; 
     @Autowired
     public void setTemplate(HibernateTemplate template) {  

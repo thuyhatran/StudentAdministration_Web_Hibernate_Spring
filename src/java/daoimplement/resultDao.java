@@ -26,12 +26,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Administrator
  */
-
+@Component
 public class resultDao implements resultsInterface<Results> {
     
 
